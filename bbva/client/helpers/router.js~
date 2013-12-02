@@ -1,0 +1,23 @@
+Meteor.Router.add({
+'/': 'mapa',
+'/hotels/:_id': {
+to: 'hotelPage',
+and: function(id) { Session.set('currentHotelId', id); }
+},
+'/hotels': 'hotelsList',
+'/maparegister': 'maparegister'
+
+});
+
+Meteor.Router.filters({
+'requireLogin': function(page) {
+if (Meteor.user())
+return page;
+else if (Meteor.loggingIn())
+return 'loading';
+else
+return 'accessDenied';
+}
+});
+
+Meteor.Router.filter('requireLogin', {only:'maparegister'});

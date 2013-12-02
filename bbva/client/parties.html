@@ -1,0 +1,163 @@
+<head>
+  <title>BBVA DATATHON</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  {{> page}}
+</body>
+
+<template name="page">
+  {{#constant}}
+    <div id="map"></div>
+  {{/constant}}
+
+  {{> details}}
+  
+</template>
+
+
+
+
+<template name="details">
+  <div class="overlay slide-panel-left darkglass" style="opacity: 1; width: 299px;">
+
+        <div class="overlay-super slide-panel-content hide slide-panel-section1" style="display: block; opacity: 1;">
+        <button id="closeLeft" type="button" class="close question"><i class="icon-remove icon-white"></i></button>
+            <div class="faces" id="quickview">
+                <button style="position:absolute;right:20px;top:4px" id="aboutGauges" type="button" class="close question"><i class="icon-question-sign icon-white"></i></button>
+                <span id="qvNotAllowed" class="qv-not-allowed text-center hide" style="display: none;">
+                    <img src="http://illustreetscdn.appspot.com/img/xploria_img/stop-icon.png">
+                    <br>
+                    <small>This area does not match<br>your filtering criteria</small>
+                </span>
+
+                    <div class="panel-heading text-center slide-panel-subsection">
+                        <div class="panel-heading-text"><span id="qvWard"><strong>{{nombre}}</strong></span></div>
+                    </div>
+
+                    <!--
+                    <small class="muted"><small>Neighbourhood</small></small><br><small id="qvLsoa">&nbsp;</small>
+                    <br>
+                    <small class="muted"><small>Local authority</small></small><br><small id="qvLa">&nbsp;</small>
+                    -->
+
+                
+
+                <div class="slide-panel-subsection">
+                    <div id="qv-subinfo" style="opacity: 1;">
+                        <div id="gauge3">
+                            <div class=" muted text-center"><small><strong>Ranking:  {{posicion}} de un total de {{total}}</strong></small>
+                                <!---->
+                            </div>
+
+                            
+                            <small class="muted"><small>Puntuación</small></small><small class="muted pull-right"><small>Nº opiniones</small></small>
+                            <br>
+                            <strong><small id="avgBuyingPrice"><strong>{{puntuacion}} de 5</strong></small></strong><strong><small class="pull-right" id="avgRentingPrice"><strong>{{opiniones}}</strong></small></strong>
+                            <br>
+                        </div>
+
+                        <div class="spacer"></div>
+                        <div>
+                            <div><small><small>Mejor segmento demográfico</small></small></div>
+                            <div class="pull-left muted">
+                                <small><small>Caracterización:</small></small>
+                                <br>
+                                <small><small>Gasto total segmento:</small></small>
+                                
+                            </div>
+                            <div class="pull-right text-right">
+                                <strong><small><span id="qvMedianAge">{{demografia}}&nbsp;&nbsp;&nbsp;</span></small></strong>
+                                <br>
+                                <strong><small><span id="qvMedianAge">{{gasto}} €&nbsp;&nbsp;&nbsp;</span></small></strong>
+                            </div>
+                        </div>
+                        <br><br>
+
+                        <div class="spacer"></div>
+                        <div style="height:100%">
+                            <div><small><small>Gastos</small></small></div>
+                            <div class="pull-left muted">
+                                <div><small><small>Mejor día de la semana:</small></small></div>
+                                <div><small><small>Mejor hora del día:</small></small></div>
+                                <div><small><small>Ticket Medio:</small></small></div>
+                            </div>
+                            <div class="pull-right text-right">
+                                <div><strong><small><span id="qvNearestGP">{{dia}}&nbsp;&nbsp;&nbsp;</span></small></strong></div>
+                                <div><strong><small><span id="qvNearestFood">{{hora}}&nbsp;&nbsp;&nbsp;</span></small></strong></div>
+                                <div><strong><small><span id="qvNearestFood">{{ticket}} €&nbsp;&nbsp;&nbsp;</span></small></strong></div>
+                            </div>
+                        </div>
+                        <br><br><br>
+
+                        <div class="spacer"></div>
+                        <div id="inQvSchools">
+                            <div><small><small>Transacciones</small></small></div>
+                            <div class="pull-left muted">
+                                <div><small><small>Gasto medio en el período:</small></small></div>
+                                <div><small><small>Número de transaciones en el período:</small></small></div>
+                            </div>
+                            <div class="pull-right text-right">
+                                <div><strong><small><span id="qvKS2" >{{gasto_medio}} €&nbsp;&nbsp;&nbsp;</span></small></strong></div>
+                                <div><strong><small><span id="qvKS4" >{{transacciones}}&nbsp;&nbsp;&nbsp;</span></small></strong></div>
+                            </div>
+                        </div>
+
+                        <div id="inQvContinue" class="text-center">
+                             <!-- <button id="inQvContinueGo" class="btn-small btn btn-grigio" data-toggle="modal" data-target="#myModal">Estadísticas detalladas</button> class="qv-arrow-green-up"  class="qv-arrow-red-down"-->
+                             <button id="inQvContinueGo" class="btn-small btn btn-grigio">Datos del proyecto</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+           
+
+
+                                  <!-- Modal -->
+                  <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      <h3 id="myModalLabel">Descripción</h3>
+                    </div>
+                    <div class="modal-body texto-modal">
+                      <p>Este proyecto es un prototipo de una herramienta de inteligencia de negocio que tiene por objetivo <b>proporcionar información a los establecimientos de restauración acerca de sus principales parámetros así como de los de su competencia.</b>. De forma general, <b>este prototipo es extensible a los otros sectores comerciales proporcionados por la API del BBVA</b> (en este caso se ha elegido restauración: es_food).</p>
+
+                      <p>Como principal particularidad presenta el <b>cruce de los datos proporcionados por la API del BBVA con datos procedentes de Tripadvisor</b>, demostrando el gran <b>potencial de la cualificación de las bases de datos a través de otras fuentes existentes en Internet mediante procesos automatizads</b>. En concreto, se ha extraído los restaurantes de Madrid (se ha limitado a 100 para evitar sobrecargar los servidores de Tripadvisor) obteniendo de esta fuente: el nombre, geoposición,opinión media y número de opiniones. A partir de la geoposición, se han obtenido los datos correspondientes a las transacciones realizadas en cada punto geográfico.</p>
+
+                      <p>Se ha obviado la limitación impuesta por la API a la hora de devolver los datos correspondientes a transaciones de los establecimientos de restauración cercanos a un punto geográfico determinado. Es decir, probablemente los datos consultados en un punto geográfico, no se correspondan con las transacciones asociadas a un solo restaurante, sino que contendrán transacciones de otros establecimientos de restauración cercanos (celdas de 400 x 400 metros).</p>
+
+                      <p>No obstante, esta limitación del presente prototipo puede ser solucionada muy fácilmente a nivel de API (mejorando la precisión de los datos). De hecho, esta limitación ha sido impuesta a propósito para salvaguardar el anonimato de los establecimientos.</p>
+
+                      <p><b>Los resultados obtenidos validan el prototipo</b> como se puede ver en la distribución de la cantidad media de las transacciones por día (mayor valor y frecuencia en fines de semana), en la distribucción de transaciones por hora del día (mayor concentración en los horarios de hostelería: 7:00-10:00 13:00-16:00 y 20:00-24:00.</p>
+
+                      <p>Algunas de las tecnologías utilizadas para la construcción de este prototipo son: <b>base de datos MongoDB, framework javascript MeteorJS, librería de visualización NVD3.js y tareas de extracción (de restaurantes en Tripadvisor) en python</b>.</p>
+
+                      <p>Por último resaltar que es un prototipo y como tal es necesario una puesta en producción del sistema más robusta. Actualmente es posible que presente alguna deficiencia o inconsistencia en su funcionamiento.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                     
+                    </div>
+                  </div>
+            
+
+
+
+ </template> 
+
+
+ <template name='stats'>
+
+    <div id="chart2"><svg></svg></div>
+
+
+</template>
+
+
+<template name="loading"> {{>spinner}}
+</template>
+
