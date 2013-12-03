@@ -5,6 +5,7 @@
     "router": {},
     "meteor_nvd3": {},
     "chartjs": {},
-    "flot": {}
+    "flot": {},
+    "bootboxjs": {}
   }
 }

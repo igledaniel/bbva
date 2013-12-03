@@ -5,10 +5,13 @@
 
 // If no party selected, or if the selected party was deleted, select one.
 Meteor.startup(function () {
-  
+
+
     Meteor.subscribe("restaurantes", function(){ 
       total=Restaurants.find({}).count();
       Session.set('total',total);
+                           
+
       
       });
 
@@ -16,7 +19,8 @@ Meteor.startup(function () {
 
   //console.log('empezando');
   
-  Meteor.subscribe('estadisticas');
+  Meteor.subscribe('estadisticas',function(){
+  });
   Meteor.subscribe('genero');
   Meteor.subscribe('heat');
   Session.set('nombre',"BBVA DATATHON (seleccione un restaurante en el mapa)");
@@ -31,6 +35,14 @@ Meteor.startup(function () {
   Session.set('transacciones',0);
   Session.set('ticket',0);
 
+ cuenta=[]
+ sem=0
+ sem1=0
+ sem2=0
+
+  Session.set('sem',0)
+  Session.set('sem1',0)
+  Session.set('sem2',0)
   //heats= Heat.find().fetch();
 
  /*  heat_data={
@@ -121,10 +133,12 @@ return av/cnt;
 // Party details sidebar
 
 Template.page.rendered = function () {
-                            
+  
+
+                         
  var testData={
-        max: 20,
-        data: [{"lat": 40.423237, "lon": -3.714588, "value": 35.42880952380953}, {"lat": 40.41182, "lon": -3.69428, "value": 20.231190476190474}, {"lat": 40.41746, "lon": -3.71112, "value": 25.980714285714285}, {"lat": 40.42562, "lon": -3.71665, "value": 35.42880952380953}, {"lat": 40.4132, "lon": -3.69916, "value": 37.63666666666666}, {"lat": 40.43491, "lon": -3.71319, "value": 26.587142857142855}, {"lat": 40.42206, "lon": -3.70253, "value": 31.905}, {"lat": 0, "lon": 0, "value": 1}, {"lat": 40.4181, "lon": -3.69111, "value": 21.230952380952377}, {"lat": 40.41324, "lon": -3.70842, "value": 25.980714285714285}, {"lat": 40.41487, "lon": -3.70269, "value": 23.63690476190476}, {"lat": 40.42076, "lon": -3.679, "value": 29.77785714285714}, {"lat": 40.41967, "lon": -3.70938, "value": 19.39904761904762}, {"lat": 40.46343, "lon": -3.69363, "value": 27.39920634920635}, {"lat": 40.41973, "lon": -3.70914, "value": 19.39904761904762}, {"lat": 40.41005, "lon": -3.69617, "value": 20.231190476190474}, {"lat": 40.42651, "lon": -3.71648, "value": 35.42880952380953}, {"lat": 40.42038, "lon": -3.7003, "value": 23.26404761904762}, {"lat": 40.4329, "lon": -3.695775, "value": 25.24666666666667}, {"lat": 40.46304, "lon": -3.59216, "value": 1}, {"lat": 40.42806, "lon": -3.69083, "value": 48.00369047619048}]
+        max: 48,
+        data: [{"lat": 40.423237, "lon": -3.714588, "value": 35.42880952380953}, {"lat": 40.41582, "lon": -3.702441, "value": 37.63666666666666}, {"lat": 40.42225, "lon": -3.698907, "value": 23.26404761904762}, {"lat": 40.458847, "lon": -3.695322, "value": 38.73833333333334}, {"lat": 40.41182, "lon": -3.69428, "value": 20.231190476190474}, {"lat": 40.42049, "lon": -3.71257, "value": 72.2252857142857}, {"lat": 40.41225, "lon": -3.70944, "value": 39.84285714285715}, {"lat": 40.41746, "lon": -3.71112, "value": 25.980714285714285}, {"lat": 40.41278, "lon": -3.70334, "value": 23.63690476190476}, {"lat": 40.42562, "lon": -3.71665, "value": 35.42880952380953}, {"lat": 40.4132, "lon": -3.69916, "value": 37.63666666666666}, {"lat": 40.43491, "lon": -3.71319, "value": 26.587142857142855}, {"lat": 40.41718, "lon": -3.71096, "value": 25.980714285714285}, {"lat": 40.42206, "lon": -3.70253, "value": 31.905}, {"lat": 40.43896, "lon": -3.71067, "value": 25.26761904761905}, {"lat": 40.43566, "lon": -3.69689, "value": 25.24666666666667}, {"lat": 0, "lon": 0, "value": 1}, {"lat": 40.4181, "lon": -3.69111, "value": 21.230952380952377}, {"lat": 40.445644, "lon": -3.676633, "value": 27.15261904761905}, {"lat": 40.448235, "lon": -3.700071, "value": 33.40257936507937}, {"lat": 40.41324, "lon": -3.70842, "value": 25.980714285714285}, {"lat": 40.41946, "lon": -3.67696, "value": 28.94642857142857}, {"lat": 40.41487, "lon": -3.70269, "value": 23.63690476190476}, {"lat": 40.42076, "lon": -3.679, "value": 29.77785714285714}, {"lat": 40.40406, "lon": -3.6779, "value": 30.46904761904762}, {"lat": 40.43816, "lon": -3.7153, "value": 43.62428571428572}, {"lat": 40.42799, "lon": -3.69735, "value": 55.14833333333333}, {"lat": 40.42633, "lon": -3.69646, "value": 28.195476190476196}, {"lat": 40.41967, "lon": -3.70938, "value": 19.39904761904762}, {"lat": 40.45747, "lon": -3.58526, "value": 17.673333333333336}, {"lat": 40.41532, "lon": -3.69895, "value": 37.63666666666666}, {"lat": 40.41028, "lon": -3.6949, "value": 20.231190476190474}, {"lat": 40.46343, "lon": -3.69363, "value": 27.39920634920635}, {"lat": 40.41418, "lon": -3.69695, "value": 25.11313492063492}, {"lat": 40.41973, "lon": -3.70914, "value": 19.39904761904762}, {"lat": 40.42245, "lon": -3.70623, "value": 31.905}, {"lat": 40.43392, "lon": -3.70782, "value": 34.06309523809524}, {"lat": 40.40424, "lon": -3.69624, "value": 27.500476190476192}, {"lat": 40.41005, "lon": -3.69617, "value": 20.231190476190474}, {"lat": 40.42651, "lon": -3.71648, "value": 35.42880952380953}, {"lat": 40.42038, "lon": -3.7003, "value": 23.26404761904762}, {"lat": 40.46363, "lon": -3.69343, "value": 27.39920634920635}, {"lat": 40.42076, "lon": -3.69008, "value": 21.230952380952377}, {"lat": 40.42535, "lon": -3.7138, "value": 35.42880952380953}, {"lat": 40.4329, "lon": -3.695775, "value": 25.24666666666667}, {"lat": 40.46304, "lon": -3.59216, "value": 1}, {"lat": 40.416035, "lon": -3.701702, "value": 37.63666666666666}, {"lat": 40.42987, "lon": -3.71867, "value": 33.063809523809525}, {"lat": 40.42806, "lon": -3.69083, "value": 48.00369047619048}, {"lat": 40.41738, "lon": -3.71046, "value": 25.980714285714285}] 
       };
 
 
@@ -247,7 +261,20 @@ Template.page.rendered = function () {
       point.rank=restaurante.rank;
       point.codigo=restaurante.codigo;
       markers.addLayer(point);
-      map.addLayer(markers);
+
+
+      //map.addLayer(markers);
+      cuenta.push[markers]
+
+      if (cuenta.length==Session.get('total')){
+        console.log('51 hoteles');
+        map.addLayer(markers);
+      }
+      //cuenta ++;
+      
+      
+      
+      //console.log(cuenta)
 
 
     },
@@ -256,6 +283,8 @@ Template.page.rendered = function () {
       }
 
   });
+
+
 
     function Onclick(e){
       console.log(e)
@@ -349,22 +378,30 @@ Template.page.rendered = function () {
 
                 estadistica=Estadisticas.find({'codigo':marker.codigo}).forEach(function(punto){
                   //console.log(punto)
-                  punto['days'].forEach(function(punt){
-                    var dia=punt['day'];
-                    punt['hours'].forEach(function(horas){
-                      //console.log(horas['hour']);
-                      if (horas['hour']=='00'){
-                        horas['hour']='24';
-                        estadisticas.push([dia,horas['hour'],horas['avg'],horas['num_payments']]);
-                      }
-                      else{
-                        estadisticas.push([dia,horas['hour'],horas['avg'],horas['num_payments']]);
-                        //lineChartData['datasets'][0]['data'].push(horas['avg']);
-                      }
+
+                  if (Array.isArray(punto['days'])){
+                    punto['days'].forEach(function(punt){
+                      var dia=punt['day'];
+                      punt['hours'].forEach(function(horas){
+                        //console.log(horas['hour']);
+                        if (horas['hour']=='00'){
+                          horas['hour']='24';
+                          estadisticas.push([dia,horas['hour'],horas['avg'],horas['num_payments']]);
+                        }
+                        else{
+                          estadisticas.push([dia,horas['hour'],horas['avg'],horas['num_payments']]);
+                          //lineChartData['datasets'][0]['data'].push(horas['avg']);
+                        }
+                      });
+
+
                     });
 
+                  }
 
-                  });
+                  else{
+                    estadisticas.push([0,0,0,0]);
+                  }
 
                   
 
@@ -651,11 +688,17 @@ Template.page.rendered = function () {
                 genero=Genero.find({'codigo':marker.codigo}).forEach(function(punto){
                   console.log(punto)
                   var date= punto['date'];
-                  punto['datos'].forEach(function(punt){
-                    console.log(punt['avg'])
-                    generos.push([date,punt['avg'],punt['num_payments'],punt['hash']])
-                    
-                    });
+                   if(Array.isArray(punto['datos'])){
+                      punto['datos'].forEach(function(punt){
+                        console.log(punt['avg'])
+                        generos.push([date,punt['avg'],punt['num_payments'],punt['hash']])
+                        
+                      });
+
+                    }
+                    else {
+                      generos.push([0,0,0,0])
+                    }
 
 
                   });
@@ -766,11 +809,17 @@ Template.page.rendered = function () {
                 genero=Genero.find({'codigo':marker.codigo}).forEach(function(punto){
                   //console.log(punto)
                   var date= punto['date'];
-                  punto['datos'].forEach(function(punt){
-                    //console.log(punt['avg'])
-                    generos.push([date,punt['avg'],punt['num_payments'],punt['hash']])
-                    
-                    });
+                  if (Array.isArray(punto['datos'])){
+                    punto['datos'].forEach(function(punt){
+                      //console.log(punt['avg'])
+                      generos.push([date,punt['avg'],punt['num_payments'],punt['hash']])
+                      
+                      });
+
+                }
+                else {
+                  generos.push([0,0,0,0])
+                }
 
 
                   });
@@ -1095,7 +1144,9 @@ Template.details.events = {
      
      
 
-} 
+}
+
+
 
 };
 
@@ -1232,90 +1283,18 @@ Template.stats.rendered =function () {
 
 
 
-/*Template.details.rendered = function () {
+Template.details.rendered = function () {
 
-    var self = this;
-    self.node = self.find("svg");
-    //var hoteles= Hotels.find();
-    if (! self.handle) {
-        self.handle = Deps.autorun(function () {
-            data=[];
-           
-
-
-          function dat(groups, points) {
-              var data = [],
-                  shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
-                  random = d3.random.normal();
-
-              for (i = 0; i < groups; i++) {
-                data.push({
-                  key: 'Group ' + i,
-                  values: []
-                });
-
-                for (j = 0; j < points; j++) {
-                  data[i].values.push({
-                    x: random()
-                  , y: random()
-                  , size: Math.random()
-                  //, shape: shapes[j % 6]
-                  });
-                }
-              }
-
-              return data;
-          }
-
-
-          nv.addGraph(function() {
-            var chart = nv.models.scatterChart()
-                          .showDistX(true)
-                          .showDistY(true)
-                          .color(d3.scale.category10().range());
-
-            chart.xAxis.tickFormat(d3.format('.02f'));
-            chart.yAxis.tickFormat(d3.format('.02f'));
-
-            d3.select('#chart svg')
-                .datum(dat(4,40))
-              .transition().duration(500)
-                .call(chart);
-
-            nv.utils.windowResize(chart.update);
-
-            return chart;
-          });
-
-            //hoteles= Hotels.find()
-            //hoteles1=Hotels.find().
-                //hoteles_total.rewind();
-
-            //hoteles_total.rewind();
-
-            //var array= hoteles_total.fetch();
-            //console.log(hoteles_total.fetch());
-
-
-            Restaurants.find().forEach(function(punto){
-                 //alert(punto.reputacion +' '+ punto.precio_maximo +' '+ punto.categoria);
-                
-
-         });
-
-
-
-
-
-
-
-    });
-}
+  
+      
+    
+  
+  
 
 
 
   }
 
 
-*/
+
 

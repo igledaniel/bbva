@@ -7,7 +7,8 @@
       "router": {},
       "meteor_nvd3": {},
       "chartjs": {},
-      "flot": {}
+      "flot": {},
+      "bootboxjs": {}
     },
     "packages": {
       "leaflet": {
@@ -39,6 +40,11 @@
         "git": "https://github.com/austinrivas/meteor-flot.git",
         "tag": "v1.0.6",
         "commit": "b1561652ac7a73a99397a9922d39a5e19a75d26e"
+      },
+      "bootboxjs": {
+        "git": "https://github.com/TimHeckel/meteor-bootboxjs.git",
+        "tag": "v3.2.2",
+        "commit": "580adfebfa12b4d2186a80cec1109dab74ad6228"
       },
       "raphaeljs-package": {
         "git": "https://github.com/doubledare/raphaeljs-package.git",
